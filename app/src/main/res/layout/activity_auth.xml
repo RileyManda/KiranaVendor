@@ -1,0 +1,232 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:weightSum="4"
+    android:layout_alignParentTop="true"
+    android:id="@+id/verifView"
+    tools:context=".auth.Auth">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="18dp"/>
+
+
+    <LinearLayout
+        android:id="@+id/infoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginBottom="18dp">
+        <TextView
+            android:id="@+id/status"
+            style="@style/ThemeOverlay.TextDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signed_out" />
+
+        <TextView
+            android:id="@+id/detail"
+            style="@style/ThemeOverlay.TextDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Firebase User ID: 123456789abc" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/activity_dataform" />
+
+    <!--[START]AuthView**************************************-->
+    <RelativeLayout
+        style="@style/Widget.MaterialComponents.CardView"
+        android:id="@+id/signUpView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/grey_300"
+        android:gravity="center_vertical"
+        android:elevation="12dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:id="@+id/phoneAuthFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="18dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phonelay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                app:counterEnabled="false"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fieldPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:hint="@string/phone"
+                    android:inputType="phone"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/codelay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fieldVerificationCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="5dp"
+                    android:hint="@string/hint_verification_code"
+                    android:inputType="text"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/authButtons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/phoneAuthFields">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/verificationBtn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="@string/phone_signup"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonVerifyPhone"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="@string/verify_phone_auth"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnResend"
+                style="@style/Widget.MaterialComponents.Button"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="@string/resend_phone_auth"
+                />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+    <!--[START]Non Functional decorations for now********************************-->
+    <!--[START]AuthOptions[HELP]**************************************-->
+    <RelativeLayout
+        android:id="@+id/helpView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/noAcc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_account"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_alignParentStart="true"/>
+
+        <!-- <Button
+             style="@style/Widget.MaterialComponents.Button.TextButton"
+             android:id="@+id/hasAcc"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/has_acc"
+             android:layout_gravity="center"
+             android:layout_marginStart="8dp"
+             android:layout_alignParentStart="true"
+             android:visibility="gone"
+             />-->
+
+
+        <TextView
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/help"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_alignParentEnd="true"
+            android:drawableStart="@drawable/ic_live_help_black_24dp"/>
+
+
+    </RelativeLayout>
+    <!--[END]AuthOptions[HELP]**************************************-->
+    <!--[END]Non Functional decorations for now********************************-->
+
+    <!--[END]AuthView**************************************-->
+    <LinearLayout
+        android:id="@+id/signedInButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        android:weightSum="1.0">
+
+        <Button
+            android:id="@+id/signOutButton"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="@string/sign_out"
+            android:backgroundTint="@color/colorPrimaryDark"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

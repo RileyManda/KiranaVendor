@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "326080844109",
+    "firebase_url": "https://vendorapp-fd596.firebaseio.com",
+    "project_id": "vendorapp-fd596",
+    "storage_bucket": "vendorapp-fd596.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:326080844109:android:caf119798d8865f0",
+        "android_client_info": {
+          "package_name": "com.riley.kiranavendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "326080844109-u6nfch631sfd9hd1l15tkto8kqv2e8iq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.riley.kiranavendor",
+            "certificate_hash": "171642d76da92a4b89dd4b8d27edbcbaeabf9e45"
+          }
+        },
+        {
+          "client_id": "326080844109-25jmbl5rju147memj39k3m22crkel352.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACVjbHzCyFAwXAhVWHsGMk_XFcwJdbJ04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "326080844109-25jmbl5rju147memj39k3m22crkel352.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
