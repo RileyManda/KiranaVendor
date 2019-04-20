@@ -1,20 +1,27 @@
 package com.riley.kiranavendor.base;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.riley.kiranavendor.BuildConfig;
 import com.riley.kiranavendor.HomeActivity;
 import com.riley.kiranavendor.R;
 import com.riley.kiranavendor.network.AppStatus;
@@ -27,6 +34,9 @@ import butterknife.Unbinder;
  * **/
 public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
+    public static final String REQUIRED = "Required";
+    public static final String TOO_LONG = "Acc Type Too long";
+    public static final String NO_SUCH = "Incorrect Account Type";
     private ProgressDialog mProgressDialog;
     private DatabaseReference titleRef;
     private ValueEventListener mTitleListener;
@@ -49,11 +59,15 @@ public class BaseActivity extends AppCompatActivity {
 
 
 
-    @BindView(R.id.signedInButtons)
-    public  ViewGroup mSignedInViews;
+
+
 
     @BindView(R.id.dataForm)
     public  ViewGroup mDataFm;
+
+
+    @BindView(R.id.signedInButtons)
+    public  ViewGroup mSignedInViews;
 
     @BindView(R.id.signUpView)
     public  ViewGroup mSignedUpViews;
@@ -61,15 +75,17 @@ public class BaseActivity extends AppCompatActivity {
     @BindView(R.id.helpView)
     public ViewGroup helpViews;
 
-
     //Data Views
     //TextViews
+
     @BindView(R.id.status)
     public TextView mStatusText;
+
     @BindView(R.id.detail)
     public TextView mDetailText;
 
     //user data[Form Views]
+
     @BindView(R.id.ufname)
     public TextView mFirstname;
 
@@ -78,13 +94,15 @@ public class BaseActivity extends AppCompatActivity {
 
     @BindView(R.id.uage)
     public TextView mAge;
+
+    @BindView(R.id.accType)
+    public AutoCompleteTextView mType;
     //user data[Form Views]END
 
     //EditTexts
     @BindView(R.id.fieldPhoneNumber)
     public TextInputEditText mPhoneNumberField;
 
-    //EditTexts
     @BindView(R.id.fieldVerificationCode)
     public
     TextInputEditText mVerificationField;
@@ -101,23 +119,25 @@ public class BaseActivity extends AppCompatActivity {
 
     @BindView(R.id.buttonVerifyPhone)
     public
-    Button mVerifyButton;
+    MaterialButton mVerifyButton;
 
     @BindView(R.id.btnResend)
     public
-    Button mResendButton;
+    MaterialButton mResendButton;
 
     @BindView(R.id.signOutButton)
     public
-    Button mSignOutButton;
+    MaterialButton mSignOutButton;
 
-    @BindView(R.id.noAcc)
+    @BindView(R.id.repissue)
     public
-    Button mNoAcc;
+    MaterialButton mReports;
+
+
 
     @BindView(R.id.save_data)
     public
-    Button msaveData;
+    MaterialButton msaveData;
 
    /** @BindView(R.id.hasAcc)
     public
@@ -170,17 +190,16 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     //Redir to home after sucessfully saved profile
-    public void goHome() {
-        Intent i = new Intent(BaseActivity.this, HomeActivity.class);
-        startActivity(i);
-        finish();
+
+    public static void nextPass(Activity context) {
+        Intent intent = new Intent(context,HomeActivity.class);
+        context.startActivity(intent);
     }
+
 
 
     public String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
-
-
 
 }

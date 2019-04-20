@@ -44,6 +44,8 @@
     <include
         layout="@layout/activity_dataform" />
 
+
+
     <!--[START]AuthView**************************************-->
     <RelativeLayout
         style="@style/Widget.MaterialComponents.CardView"
@@ -124,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:text="@string/phone_signup"
+                android:text="@string/phone_signin"
                 />
 
             <com.google.android.material.button.MaterialButton
@@ -159,48 +161,14 @@
     </RelativeLayout>
 
     <!--[START]Non Functional decorations for now********************************-->
+
     <!--[START]AuthOptions[HELP]**************************************-->
-    <RelativeLayout
-        android:id="@+id/helpView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:id="@+id/noAcc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_account"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_alignParentStart="true"/>
+   <include
+       layout="@layout/auth_help_view">
 
-        <!-- <Button
-             style="@style/Widget.MaterialComponents.Button.TextButton"
-             android:id="@+id/hasAcc"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="@string/has_acc"
-             android:layout_gravity="center"
-             android:layout_marginStart="8dp"
-             android:layout_alignParentStart="true"
-             android:visibility="gone"
-             />-->
-
-
-        <TextView
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:id="@+id/help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/help"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_alignParentEnd="true"
-            android:drawableStart="@drawable/ic_live_help_black_24dp"/>
-
-
-    </RelativeLayout>
+   </include>
     <!--[END]AuthOptions[HELP]**************************************-->
+
     <!--[END]Non Functional decorations for now********************************-->
 
     <!--[END]AuthView**************************************-->
@@ -215,7 +183,7 @@
         android:visibility="gone"
         android:weightSum="1.0">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/signOutButton"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"

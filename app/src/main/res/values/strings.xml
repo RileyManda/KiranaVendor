@@ -39,7 +39,6 @@
     <string name="hint_user_id">User ID</string>
     <string name="get_custom_token">Get Token</string>
     <string name="sign_in">Sign In</string>
-    <string name="create_account">Create Account</string>
     <string name="send_link">Send Link</string>
     <string name="sign_out">Sign Out</string>
     <string name="verify_email">Verify Email</string>
@@ -65,7 +64,7 @@
     <string name="status_sign_in_failed">Sign-in failed</string>
     <string name="instant_validation">(instant validation)</string>
 
-    <string name="firebase_status_fmt">Firebase User: %s</string>
+    <string name="firebase_status_fmt">User ID %s</string>
     <string name="firebase_user_management">Firebase User Management</string>
 
     <string name="google_status_fmt">Google User: %s</string>
@@ -99,10 +98,15 @@
     <string name="phone">Phone Number</string>
     <string name="no_account">Dont Have An Account?</string>
     <string name="help">Help</string>
-    <string name="has_acc">Sign In</string>
+    <string name="has_acc">Already Have an  Account</string>
     <string name="phone_signup">SignUp</string>
     <string name="firstname">First Name</string>
     <string name="lastname">Last Name</string>
     <string name="age">Age</string>
     <string name="Save">save</string>
+    <string name="acctype">Acoount Type</string>
+    <string name="create_account">Create Account</string>
+    <string name="phone_signin">Sign In</string>
+    <string name="reportissue">Report An Issue</string>
+
 </resources>

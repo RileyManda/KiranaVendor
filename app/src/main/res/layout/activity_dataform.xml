@@ -5,8 +5,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:visibility="gone"
-    >
+    android:visibility="gone">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fnamelay"
@@ -69,6 +68,29 @@
             android:hint="@string/age"
             android:inputType="number"
             android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/accTypeLay"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/accType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="2dp"
+            android:hint="@string/acctype"
+            android:maxLines="1"
+            android:inputType="textAutoCorrect"
+            />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button

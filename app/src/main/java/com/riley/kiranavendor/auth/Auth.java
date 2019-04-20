@@ -1,9 +1,20 @@
 package com.riley.kiranavendor.auth;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
@@ -15,10 +26,13 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.riley.kiranavendor.HomeActivity;
+import com.riley.kiranavendor.MainActivity;
 import com.riley.kiranavendor.base.BaseActivity;
 import com.riley.kiranavendor.R;
 import com.riley.kiranavendor.model.User;
 
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
@@ -29,13 +43,16 @@ public class Auth extends BaseActivity implements
     private static final String TAG = "Auth";
     private static final String KEY_VERIFY_IN_PROGRESS = "key_verify_in_progress";
 
-    private static final int STATE_INITIALIZED = 1;
-    private static final int STATE_CODE_SENT = 2;
-    private static final int STATE_VERIFY_FAILED = 3;
-    private static final int STATE_VERIFY_SUCCESS = 4;
-    private static final int STATE_SIGNIN_FAILED = 5;
-    private static final int STATE_SIGNIN_SUCCESS = 6;
+    private static final int STATE_EXISTING_USER = 1;
+    private static final int STATE_INITIALIZED = 2;
+    private static final int STATE_CODE_SENT = 3;
+    private static final int STATE_VERIFY_FAILED = 4;
+    private static final int STATE_VERIFY_SUCCESS = 5;
+    private static final int STATE_SIGNIN_FAILED = 6;
+    private static final int STATE_SIGNIN_SUCCESS = 7;
     private static DatabaseReference mDatabase;
+
+    Boolean firstRun = true;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -66,6 +83,8 @@ public class Auth extends BaseActivity implements
         mResendButton.setOnClickListener(this);
         mSignOutButton.setOnClickListener(this);
         msaveData.setOnClickListener(this);
+        mReports.setOnClickListener(this);
+
 
        //[Auth]
         mAuth = FirebaseAuth.getInstance();
@@ -109,19 +128,76 @@ public class Auth extends BaseActivity implements
                 updateUI(STATE_CODE_SENT);
             }
         };
+
+        //Account Type TextWatcher
+        //TextWatcher
+        mType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s.subSequence(0, s.length()).toString())) {
+                    AccountTypeAutoComplete(s.subSequence(0, s.length()).toString());
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
+
+
+    public void  AccountTypeAutoComplete(String text) {
+        final ArrayList<String> account_type = new ArrayList<>();
+        final ArrayAdapter<String> maadapter = new ArrayAdapter<String>(this,
+                R.layout.acc_list, R.id.maccounts, account_type);
+        mType.setAdapter(maadapter);
+        account_type.add("Client");
+        account_type.add("Vendor");
+
+        for (int i = 0; i < account_type.size() ; i++) {
+
+              text = account_type.get(i);
+            Log.d(TAG, "AccountTypeAutoComplete: " + text);
+
+        }
+
+
+    }
+
+    private  void onFirstRun(){
+        Boolean isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                .getBoolean("isFirstRun", true);
+        if (isFirstRun) {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            updateUI(currentUser);
+
+            if (mVerificationInProgress && validatePhoneNumber()) {
+                startPhoneNumberVerification(mPhoneNumberField.getText().toString());
+            }
+
+        }else{
+
+            startActivity(new Intent(Auth.this, HomeActivity.class));
+            finish();
+            Toast.makeText(Auth.this, "Welcome Back", Toast.LENGTH_LONG)
+                    .show();
+
+        }
+        getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit()
+                .putBoolean("isFirstRun", false).apply();
+    }
     // [START _check_user]
     @Override
     public void onStart() {
         super.onStart();
+        checkNet();
+       // onFirstRun();
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
 
-        if (mVerificationInProgress && validatePhoneNumber()) {
-            startPhoneNumberVerification(mPhoneNumberField.getText().toString());
-        }
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -221,8 +297,13 @@ public class Auth extends BaseActivity implements
             return phone;
         }
 
+
+
     private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
+
         switch (uiState) {
+
+
             case STATE_INITIALIZED:
                 // Initialized state
                 enableViews(mSignUp, mPhoneNumberField);
@@ -244,7 +325,7 @@ public class Auth extends BaseActivity implements
                 break;
             case STATE_VERIFY_SUCCESS:
                 hideProgressDialog();
-                // Verification has succeeded, proceed to firebase sign in
+                // Verification sign in
                 disableViews(mSignUp, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
                 mDetailText.setText(R.string.status_verification_succeeded);
@@ -265,7 +346,30 @@ public class Auth extends BaseActivity implements
                 mDetailText.setText(R.string.status_sign_in_failed);
                 break;
             case STATE_SIGNIN_SUCCESS:
-                // Np-op, handled by sign-in check
+                //show start profile activity
+                mSignedUpViews.setVisibility(View.GONE);
+                helpViews.setVisibility(View.GONE);
+                mSignedInViews.setVisibility(View.VISIBLE);
+                mDataFm.setVisibility(View.VISIBLE);
+                enableViews(mPhoneNumberField, mVerificationField);
+
+                String phonenumber = mPhoneNumberField.getText().toString();
+                mPhoneNumberField.setText(phonenumber);
+
+                mPhoneNumberField.setText(null);
+                mVerificationField.setText(null);
+
+                mStatusText.setText(R.string.signed_in);
+
+
+                mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+
+                //Used for customer/User help and support
+                mDetailText.setText(getString(R.string.firebase_status_fmt,user.getUid().substring(18)));
+                Toast.makeText(Auth.this, "Welcome", Toast.LENGTH_LONG)
+                        .show();
+
+              //  onFirstRun();
                 break;
         }
 
@@ -273,29 +377,13 @@ public class Auth extends BaseActivity implements
             // Signed out
             mSignedUpViews.setVisibility(View.VISIBLE);
             mSignedInViews.setVisibility(View.GONE);
-
+            mDataFm.setVisibility(View.GONE);
             mStatusText.setText(R.string.signed_out);
-        } else {
-            // On First Run Profile
-            mSignedUpViews.setVisibility(View.GONE);
-            helpViews.setVisibility(View.GONE);
-
-            mSignedInViews.setVisibility(View.VISIBLE);
-            mDataFm.setVisibility(View.VISIBLE);
-            enableViews(mPhoneNumberField, mVerificationField);
-
-            String phonenumber = mPhoneNumberField.getText().toString();
-            mPhoneNumberField.setText(phonenumber);
-
-            mPhoneNumberField.setText(null);
-            mVerificationField.setText(null);
-
-            mStatusText.setText(R.string.signed_in);
-            mDetailText.setText(getString(R.string.firebase_status_fmt, user.getUid()));
+        }
 
 
         }
-    }
+
     private void getUData(FirebaseUser user) {
         if (!validateForm()) {
             return;
@@ -308,30 +396,45 @@ public class Auth extends BaseActivity implements
             String phonenumber = user.getPhoneNumber();
             mPhoneNumberField.setText(phonenumber);
 
-            String firstname = mFirstname.getText().toString();
+            String firstname = mFirstname.getText().toString().trim();
             mFirstname.setText(firstname);
 
-            String lastname = mLastName.getText().toString();
+            String lastname = mLastName.getText().toString().trim();
             mLastName.setText(firstname);
 
             String age = mAge.getText().toString();
             mAge.setText(age);
 
+            final String account_type = mType.getText().toString().trim();
+            mType.setText(account_type);
+
             String status = mStatusText.getText().toString();
 
-            writeNewUser(user.getUid(),user.getPhoneNumber(),firstname,lastname,age,status);
+            writeUserData(user.getUid(),user.getPhoneNumber(),firstname,lastname,age,account_type,status);
 
         }
     }
-    private static void writeNewUser(String userId,String phonenumber, String firstname,String lastname, String age,String status) {
-        User user = new User(userId,phonenumber,firstname,lastname,age,status);
 
-        mDatabase.child("users").child(userId).setValue(user).addOnSuccessListener(aVoid -> {
 
-        }).addOnFailureListener(e -> {
-            //TODO:Redirect User to Home
+    private  void writeUserData(String userId,String phonenumber, String firstname,String lastname, String age,String account_type,String status) {
+        User user = new User(userId,phonenumber,firstname,lastname,age,account_type,status);
+
+        mDatabase.child("users").child(userId).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>(){
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Intent h = new Intent(Auth.this,HomeActivity.class);
+                startActivity(h);
+
+            }
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
         });
     }
+
 
 
 
@@ -359,9 +462,11 @@ public class Auth extends BaseActivity implements
     private boolean validateForm() {
         boolean valid = true;
 
+
+
         String firstname = mFirstname.getText().toString();
         if (TextUtils.isEmpty(firstname)) {
-            mFirstname.setError("Required.");
+            mFirstname.setError(REQUIRED);
             valid = false;
         } else {
             mFirstname.setError(null);
@@ -369,7 +474,7 @@ public class Auth extends BaseActivity implements
 
         String lastname = mLastName.getText().toString();
         if (TextUtils.isEmpty(lastname)) {
-            mLastName.setError("Required.");
+            mLastName.setError(REQUIRED);
             valid = false;
         } else {
             mLastName.setError(null);
@@ -377,14 +482,32 @@ public class Auth extends BaseActivity implements
 
         String age = mAge.getText().toString();
         if (TextUtils.isEmpty(age)) {
-            mAge.setError("Required.");
+            mAge.setError(REQUIRED);
             valid = false;
         } else {
             mAge.setError(null);
+
         }
+
+        String account_type = mType.getText().toString();
+        if (TextUtils.isEmpty(account_type)) {
+            mType.setError(REQUIRED);
+            valid = false;
+
+        }else if(mType.length()>6){
+            mType.setError(TOO_LONG);//TODO:Check if mTYpe contains array strings matching "Vendor and Client"
+            valid = false;
+
+        }else {
+            mType.setError(null);
+        }
+
+
 
         return valid;
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -416,11 +539,34 @@ public class Auth extends BaseActivity implements
               hideKeyboard();
 
                 break;
+
+            case R.id.repissue:
+                goToReport();
+                hideKeyboard();
+
+                break;
             case R.id.signOutButton:
                 signOut();
                 break;
         }
     }
+
+    private void goToReport() {
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{"kiranavendors@kvapp.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "App Issue");
+        i.putExtra(Intent.EXTRA_TEXT   , "I would like to report an Issue with the App Concerning...");
+        try {
+            startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(Auth.this, "There are no email clients installed on your device...", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+
 
     @Override
     protected void onStop() {

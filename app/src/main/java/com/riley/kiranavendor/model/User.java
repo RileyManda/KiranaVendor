@@ -9,6 +9,7 @@ public class User {
     public String firstname;
     public String lastname;
     public String age;
+    public  String account_type;
     public String status;
     ///public  String verif;
 
@@ -16,12 +17,13 @@ public class User {
         // Default constructor
     }
 
-    public User(String uid, String phonenumber, String firstname, String lastname, String age, String status) {
+    public User(String uid, String phonenumber, String firstname, String lastname, String age,String account_type, String status) {
         this.uid = uid;
         this.phonenumber = phonenumber;
         this.firstname = firstname;
         this.lastname = lastname;
         this.age = age;
+        this.account_type = account_type;
         this.status = status;
     }
 }
