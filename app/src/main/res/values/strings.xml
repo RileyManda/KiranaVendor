@@ -108,5 +108,35 @@
     <string name="create_account">Create Account</string>
     <string name="phone_signin">Sign In</string>
     <string name="reportissue">Report An Issue</string>
+    <string name="signout">SignOut</string>
+    <string name="notifs">notifications</string>
+    <string name="products">Products</string>
+    <string name="purchases">Purchases</string>
+    <string name="username">username</string>
+    <string name="uid">User Id</string>
+    <string name="status">Status</string>
+    <string name="product">Product</string>
+    <string name="delete">Delete</string>
+    <string name="editprod">EditProduct</string>
+    <string name="vendorname">vendor</string>
+    <string name="time">time</string>
+    <string name="_0">0</string>
+    <string name="salescount">Sales</string>
+    <string name="productname">ProductName</string>
+    <string name="currency">$</string>
+    <string name="productprice">Price</string>
+    <string name="prodid">ProductId</string>
+    <string name="phonenumber">Phone Number</string>
+    <string name="decription">Description</string>
+    <string name="price">Price</string>
+    <string name="productid">Product ID</string>
+    <string name="qty">Quantity</string>
+    <string name="home">Home</string>
+    <string name="skip">Skip</string>
+    <string name="hello_formdata">We would like to get to know you more</string>
+    <string name="friendlynote">Feel Free to skip,you can always fill in this form in your account profile later</string>
+    <string name="description">Product Description,Lorem ipsum is blah blah blha..brrrrrr</string>
+    <string name="qtycount">0</string>
+    <string name="stock">Stock</string>
 
 </resources>

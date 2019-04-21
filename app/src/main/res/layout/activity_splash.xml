@@ -34,7 +34,7 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:scaleType="center"
-            android:theme="@style/ThemeOverlay.TitleStyle"
+            android:theme="@style/ThemeOverlay.MyTitleText"
 
 
             />

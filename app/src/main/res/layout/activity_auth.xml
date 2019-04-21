@@ -27,14 +27,14 @@
         android:layout_marginBottom="18dp">
         <TextView
             android:id="@+id/status"
-            style="@style/ThemeOverlay.TextDetail"
+            style="@style/ThemeOverlay.MyTextDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/signed_out" />
 
         <TextView
             android:id="@+id/detail"
-            style="@style/ThemeOverlay.TextDetail"
+            style="@style/ThemeOverlay.MyTextDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Firebase User ID: 123456789abc" />
@@ -83,7 +83,8 @@
                     android:layout_marginBottom="5dp"
                     android:hint="@string/phone"
                     android:inputType="phone"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:textColor="@color/black"/>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -102,6 +103,7 @@
                     android:layout_marginBottom="5dp"
                     android:hint="@string/hint_verification_code"
                     android:inputType="text"
+                    android:textColor="@color/black"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -176,7 +178,6 @@
         android:id="@+id/signedInButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"

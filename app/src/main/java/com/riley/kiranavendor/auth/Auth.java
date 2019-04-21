@@ -1,5 +1,4 @@
 package com.riley.kiranavendor.auth;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,15 +6,22 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
@@ -27,14 +33,15 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.riley.kiranavendor.HomeActivity;
-import com.riley.kiranavendor.MainActivity;
 import com.riley.kiranavendor.base.BaseActivity;
+
 import com.riley.kiranavendor.R;
-import com.riley.kiranavendor.model.User;
+import com.riley.kiranavendor.modal.User;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class Auth extends BaseActivity implements
@@ -52,7 +59,86 @@ public class Auth extends BaseActivity implements
     private static final int STATE_SIGNIN_SUCCESS = 7;
     private static DatabaseReference mDatabase;
 
-    Boolean firstRun = true;
+    /**DATA FORM & AUTH  VIEWS [START]**/
+
+    @BindView(R.id.dataForm)
+    public ViewGroup mDataFm;
+
+
+    @BindView(R.id.signedInButtons)
+    public  ViewGroup mSignedInViews;
+    @BindView(R.id.signUpView)
+    public  ViewGroup mSignedUpViews;
+
+
+    @BindView(R.id.helpView)
+    public ViewGroup helpViews;
+
+
+    @BindView(R.id.status)
+    public TextView mStatusText;
+
+    @BindView(R.id.detail)
+    public TextView mDetailText;
+
+    @BindView(R.id.ufname)
+    public TextView mFirstname;
+    @Nullable
+    @BindView(R.id.ulname)
+    public TextView mLastName;
+
+    @BindView(R.id.uage)
+    public TextView mAge;
+
+    @BindView(R.id.accType)
+    public AutoCompleteTextView mType;
+    //user data[Form Views]END
+
+    //EditTexts
+    @BindView(R.id.fieldPhoneNumber)
+    public TextInputEditText mPhoneNumberField;
+
+    @BindView(R.id.fieldVerificationCode)
+    public
+    TextInputEditText mVerificationField;
+
+
+
+
+    //Buttons
+    @BindView(R.id.verificationBtn)
+    public Button mSignUp;
+
+
+    @BindView(R.id.buttonVerifyPhone)
+    public
+    MaterialButton mVerifyButton;
+    @BindView(R.id.btnResend)
+    public
+    MaterialButton mResendButton;
+
+    @BindView(R.id.signOutButton)
+    public
+    MaterialButton mSignOutButton;
+
+    @BindView(R.id.repissue)
+    public
+    MaterialButton mReports;
+
+
+
+    @BindView(R.id.save_data)
+    public
+    MaterialButton msaveData;
+
+    @BindView(R.id.skip)
+    public
+    MaterialButton mSkipDtForm;
+    /**DATA FORM & AUTH  VIEWS [END]**/
+
+
+
+    //Boolean firstRun = true;
 
     // [START declare_auth]
     private FirebaseAuth mAuth;
@@ -67,6 +153,7 @@ public class Auth extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
         FirebaseApp.initializeApp(this);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         unbinder = ButterKnife.bind(this);
@@ -83,6 +170,7 @@ public class Auth extends BaseActivity implements
         mResendButton.setOnClickListener(this);
         mSignOutButton.setOnClickListener(this);
         msaveData.setOnClickListener(this);
+        mSkipDtForm.setOnClickListener(this);
         mReports.setOnClickListener(this);
 
 
@@ -537,6 +625,12 @@ public class Auth extends BaseActivity implements
                 FirebaseUser user = mAuth.getCurrentUser();
               getUData(user);
               hideKeyboard();
+
+                break;
+
+            case R.id.skip:
+                goHome();
+                hideKeyboard();
 
                 break;
 

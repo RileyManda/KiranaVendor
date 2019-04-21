@@ -1,4 +1,4 @@
-package com.riley.kiranavendor.model;
+package com.riley.kiranavendor.modal;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -17,7 +17,7 @@ public class User {
         // Default constructor
     }
 
-    public User(String uid, String phonenumber, String firstname, String lastname, String age,String account_type, String status) {
+    public User (String uid, String phonenumber, String firstname, String lastname, String age,String account_type, String status) {
         this.uid = uid;
         this.phonenumber = phonenumber;
         this.firstname = firstname;
@@ -25,5 +25,13 @@ public class User {
         this.age = age;
         this.account_type = account_type;
         this.status = status;
+    }
+
+    public String getAccount_type() {
+        return account_type;
+    }
+
+    public void setAccount_type(String account_type) {
+        this.account_type = account_type;
     }
 }
