@@ -28,8 +28,25 @@ public class Splash extends BaseActivity {
         StartSplash();
     }
 
-    private void StartSplash() {
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showProgressBar();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        hideProgressBar();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        hideProgressBar();
+    }
+
+
+    private void StartSplash() {
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
         LinearLayout l= findViewById(R.id.appname_layout);
@@ -54,6 +71,7 @@ public class Splash extends BaseActivity {
                     while (waited < 3500) {
                         sleep(100);
                         waited += 100;
+
                     }
                     Intent intent = new Intent(Splash.this,
                             Auth.class);
@@ -65,6 +83,7 @@ public class Splash extends BaseActivity {
                     // do nothing
                 } finally {
                     Splash.this.finish();
+
 
                 }
 

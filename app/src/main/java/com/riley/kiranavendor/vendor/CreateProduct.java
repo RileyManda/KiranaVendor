@@ -43,7 +43,7 @@ import butterknife.OnClick;
 
 /**
  * Create New Endo Activity
- * **/
+ **/
 public class CreateProduct extends BaseActivity {
 
     //Tags
@@ -54,7 +54,9 @@ public class CreateProduct extends BaseActivity {
     //Firebase
     private DatabaseReference mDatabase;
 
-    /**CREATE Views[START]s**/
+    /**
+     * CREATE Views[START]s
+     **/
 
     @BindView(R.id.cr_product_id)
     public TextInputEditText crProdId;
@@ -75,18 +77,19 @@ public class CreateProduct extends BaseActivity {
     public FloatingActionButton crSubmit;
 
 
-
-    /**CREATE ViewS[END]s**/
+    /**
+     * CREATE ViewS[END]s
+     **/
 
 
     //keys
     public String catid;
     public String tid;
-    public  String categoryKey;
-    public  String existingKey;//existing key
-    public  String catKey;//category node from db
-    public  String chiCount;
-    public  long mchildren;
+    public String categoryKey;
+    public String existingKey;//existing key
+    public String catKey;//category node from db
+    public String chiCount;
+    public long mchildren;
     // public  String children;
 
     //Date
@@ -117,17 +120,16 @@ public class CreateProduct extends BaseActivity {
         DisplayDateTime = findViewById(R.id.getDate);
 
 
-
     }
 
 
-    @OnClick(R.id.fabSubmitProd)public void crSubmit(){
-        submitProduct(); }
+    @OnClick(R.id.fabSubmitProd)
+    public void crSubmit() {
+        submitProduct();
+    }
 
 
-
-
-    public  void getKey() {
+    public void getKey() {
         DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
         Query query = mFirebaseDatabaseReference.child("categories").orderByKey();
         // Query query = mFirebaseDatabaseReference.child("categories").orderByKey();//gets the key
@@ -138,53 +140,32 @@ public class CreateProduct extends BaseActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     // pushedKey = postSnapshot.getKey();//numeric pushed key
                     existingKey = postSnapshot.getKey();//numeric pushed key
-                    Log.d(TAG,"existing key is "+existingKey);
+                    Log.d(TAG, "existing key is " + existingKey);
                     catKey = postSnapshot.child("category").getValue().toString();
-                    Log.d(TAG,"Category node is "+ catKey);
+                    Log.d(TAG, "Category node is " + catKey);
                     //TODO get the data here
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
 
-    public  void getChildren() {
-        DatabaseReference mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-        Query query = mFirebaseDatabaseReference.child("user-cats").orderByKey();
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String catsKey = postSnapshot.getKey();
-                    assert catsKey != null;
-                    long  cCount = postSnapshot.getChildrenCount();
-                    chiCount = String.valueOf(cCount);
-                    mchildren = cCount;
-                    Log.d(TAG,"Number of kids is " + cCount);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-    }
+
 
     private void submitProduct() {
 
-
-        final String product_id = crProdId.getText().toString().trim();
-
-
         final String product_name = crProdName.getText().toString().toUpperCase().trim();
+        String gen_id = Math.random() + product_name.substring(2);
+        final String product_id = gen_id + crProdId.getText().toString().toUpperCase().trim();
         //checkCategory();
         final String description = crProdDesc.getText().toString().trim();//save title to Db as Uppercase
 
         final String product_price = crProdPrice.getText().toString().trim();//save title to Db as Uppercase
 
         final String product_qty = crProdQty.getText().toString().trim();//save title to Db as Uppercase
-
 
 
         DisplayDateTime.setText(Date);
@@ -195,17 +176,16 @@ public class CreateProduct extends BaseActivity {
         if (TextUtils.isEmpty(product_name)) {
             crProdName.setError(REQUIRED);
             return;
-        }else if(crProdName.length()>30){
+        } else if (crProdName.length() > 12) {
 
             crProdName.setError(tTOO_LONG);
             return;
         }
 
-        // Cats is required
         if (TextUtils.isEmpty(description)) {
             crProdDesc.setError(REQUIRED);
             return;
-        }else if(crProdDesc.length()>30){
+        } else if (crProdDesc.length() > 30) {
 
             crProdDesc.setError(cTOO_LONG);
             return;
@@ -231,12 +211,10 @@ public class CreateProduct extends BaseActivity {
                 .show();
 
 
-
         // [START single_value_read]
         final String userId = getUid();
 
-        long endos = mchildren;
-        Log.d(TAG,"Pushed key is"+existingKey);//pushed key existing
+        Log.d(TAG, "Pushed key is" + existingKey);//pushed key existing
         final String thisKey = catKey;
         mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
                 new ValueEventListener() {
@@ -244,23 +222,25 @@ public class CreateProduct extends BaseActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         // Get user value
                         User user = dataSnapshot.getValue(User.class);
+                        Product product = dataSnapshot.getValue(Product.class);
                         assert user != null;
                         char vCode = user.account_type.toString().charAt(0);
-                        String vendor = vCode+(user.firstname + user.lastname);
+                        String vendor = vCode + (user.firstname + user.lastname);
 
                         if (user == null) {
                             // User is null, error out
                             Log.e(TAG, "User " + userId + " is unexpectedly null");
                             //does user iput existbin db
 
-                        }else{
-                            writeNewPost(userId,vendor,user.account_type,product_id,product_name,description,product_price,product_qty,date);
+                        } else {
+                            writeNewPost(userId, vendor, user.account_type, product_id, product_name, description, product_price, product_qty, date);
                             // Finish this Activity, back to the stream
                             setEditingEnabled(true);
                             finish();
                             // [END_EXCLUDE]
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                         Log.w(TAG, "getUser:onCancelled", databaseError.toException());
@@ -273,22 +253,21 @@ public class CreateProduct extends BaseActivity {
     }
 
     private void setEditingEnabled(boolean enabled) {
-            crProdName.setEnabled(enabled);
-            crProdDesc.setEnabled(enabled);
-            crProdPrice.setEnabled(enabled);
+        crProdName.setEnabled(enabled);
+        crProdDesc.setEnabled(enabled);
+        crProdPrice.setEnabled(enabled);
         crProdQty.setEnabled(enabled);
 
-            if (enabled) {
-                crSubmit.show();
-            } else {
-                crSubmit.hide();
-            }
+        if (enabled) {
+            crSubmit.show();
+        } else {
+            crSubmit.hide();
         }
-
+    }
 
 
     // [START write_fan_out]
-    private void writeNewPost(String userId,String vendor,String account_type,String product_id,String product_name, String description,String product_price,String product_qty,String date) {
+    private void writeNewPost(String userId, String vendor, String account_type, String product_id, String product_name, String description, String product_price, String product_qty, String date) {
         String key = mDatabase.child("posts").push().getKey();
         final String pushKey = mDatabase.child("categories").push().getKey();
         categoryKey = pushKey;
@@ -297,8 +276,7 @@ public class CreateProduct extends BaseActivity {
         // tid = emapKey;
 
 
-
-        Product product = new Product(userId,vendor,account_type,product_id,product_name,description,product_price,product_qty,date);
+        Product product = new Product(userId, vendor, account_type, product_id, product_name, description, product_price, product_qty, date);
         Map<String, Object> productValues = product.toMap();
 
         //child updates
@@ -314,16 +292,15 @@ public class CreateProduct extends BaseActivity {
     }
 
 
-
-
     @Override
-    public  void onBackPressed(){
+    public void onBackPressed() {
         finish();
     }
+
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
-        getChildren();
+
     }
 
 }

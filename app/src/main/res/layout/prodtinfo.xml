@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
 
 
     <RelativeLayout
         android:id="@+id/vendorsView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="3dp"
-        android:layout_alignParentStart="true">
-
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="3dp">
 
 
         <ImageView
@@ -26,8 +26,7 @@
             android:gravity="center_vertical"
             android:padding="2dp"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_store_black_24dp"
-            />
+            android:src="@drawable/ic_store_black_24dp" />
 
         <TextView
             android:id="@+id/vendor_name"
@@ -35,24 +34,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginLeft="3dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/createdBy"
+            android:layout_toRightOf="@+id/createdBy"
             android:fontFamily="sans-serif-condensed"
             android:gravity="start|bottom"
             android:maxLines="1"
+            android:textColor="@color/grey_500"
             android:textSize="12sp"
             android:textStyle="normal"
-            tools:text="@string/vendorname"
-            android:textColor="@color/grey_500"
-            android:layout_toRightOf="@+id/createdBy"
-            android:layout_toEndOf="@+id/createdBy"/>
-
-
+            tools:text="@string/vendorname" />
 
 
     </RelativeLayout>
-
 
 
     <RelativeLayout
@@ -61,8 +57,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/vendorsView"
-        android:layout_toEndOf="@+id/vendorsView">
+        android:layout_toEndOf="@+id/vendorsView"
+        android:layout_toRightOf="@+id/vendorsView">
 
         <ImageView
             android:id="@+id/at"
@@ -77,28 +73,27 @@
             android:src="@drawable/ic_access_time_black_24dp" />
 
         <TextView
-            android:id="@+id/prodTime"
+            android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginLeft="3dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/at"
+            android:layout_toRightOf="@+id/at"
             android:fontFamily="sans-serif-condensed"
             android:gravity="start|bottom"
             android:maxLines="1"
             android:text="@string/time"
+            android:textColor="@color/grey_500"
             android:textSize="12sp"
             android:textStyle="normal"
-            tools:text="@string/time"
-            android:textColor="@color/grey_500"
-            android:layout_toRightOf="@+id/at"
-            android:layout_toEndOf="@+id/at"/>
+            tools:text="@string/time" />
 
 
     </RelativeLayout>
-
 
 
     <RelativeLayout
@@ -107,8 +102,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/timeView"
-        android:layout_toEndOf="@+id/timeView">
+        android:layout_toEndOf="@+id/timeView"
+        android:layout_toRightOf="@+id/timeView">
 
         <ImageView
             android:id="@+id/qtylabel"
@@ -121,33 +116,72 @@
             android:focusable="true"
             android:gravity="center_vertical"
             android:padding="2dp"
-            android:src="@drawable/ic_filter_list_black_24dp"
-            />
+            android:src="@drawable/ic_filter_list_black_24dp" />
 
         <TextView
             android:id="@+id/product_qty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="6dp"
             android:layout_marginRight="6dp"
-            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/qtylabel"
+            android:layout_toRightOf="@+id/qtylabel"
             android:fontFamily="sans-serif-condensed"
             android:gravity="start|bottom"
             android:maxLines="1"
             android:text="@string/time"
+            android:textColor="@color/grey_500"
             android:textSize="12sp"
             android:textStyle="normal"
-            tools:text="@string/time"
-            android:textColor="@color/grey_500"
-            android:layout_toRightOf="@+id/qtylabel"
-            android:layout_toEndOf="@+id/qtylabel"/>
+            tools:text="@string/time" />
 
 
     </RelativeLayout>
 
-    <!-- android:layout_marginLeft="-20dp"
-        android:layout_marginStart="-20dp"-->
+
+    <RelativeLayout
+        android:id="@+id/priceView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_toEndOf="@+id/timeView"
+        android:layout_toRightOf="@+id/timeView">
+
+        <ImageView
+            android:id="@+id/prodIcon"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:src="@drawable/ic_attach_money_black_24dp" />
+
+        <TextView
+            android:id="@+id/product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="6dp"
+            android:layout_toEndOf="@+id/prodIcon"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="start|bottom"
+            android:maxLines="1"
+            android:text="@string/time"
+            android:textColor="@color/grey_500"
+            android:textSize="12sp"
+            android:textStyle="normal"
+            tools:text="@string/price" />
+
+
+    </RelativeLayout>
+
 
 
 
@@ -157,16 +191,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        >
+        android:layout_alignParentRight="true">
 
         <View
             android:id="@+id/likeDiv"
             android:layout_width="1dp"
             android:layout_height="fill_parent"
-            android:background="@color/grey_500"
             android:layout_marginStart="1dp"
-            android:layout_marginLeft="1dp" />
+            android:layout_marginLeft="1dp"
+            android:background="@color/grey_500" />
 
         <TextView
             android:id="@+id/countLabel"
@@ -176,51 +209,43 @@
             android:layout_marginEnd="4dp"
             android:layout_marginRight="3dp"
 
+            android:layout_toEndOf="@+id/likeDiv"
+            android:layout_toRightOf="@+id/likeDiv"
+
             android:clickable="true"
             android:focusable="true"
-
             android:padding="2dp"
             android:scaleType="fitXY"
             android:text="@string/salescount"
             android:textColor="@color/black"
             android:textSize="12sp"
-            android:textStyle="bold"
-            android:layout_toRightOf="@+id/likeDiv"
-            android:layout_toEndOf="@+id/likeDiv"
-            />
+            android:textStyle="bold" />
 
 
         <TextView
             android:id="@+id/prod_sales_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/countLabel"
-            android:padding="1dp"
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
-            android:textStyle="bold"
-            tools:text="0"
-            android:text="@string/_0"
             android:layout_toEndOf="@+id/countLabel"
-            />
+            android:layout_toRightOf="@+id/countLabel"
+            android:padding="1dp"
+            android:text="@string/_0"
+            android:textStyle="bold"
+            tools:text="0" />
 
         <ImageView
             android:id="@+id/prodCart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/prod_sales_count"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="3dp"
             android:layout_marginRight="3dp"
-            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@+id/prod_sales_count"
             android:padding="1dp"
-            app:srcCompat="@drawable/ic_add_shopping_cart_black_24dp"
-            />
+            app:srcCompat="@drawable/ic_add_shopping_cart_black_24dp" />
     </RelativeLayout>
-
-
-
-
-
 
 
 </RelativeLayout>

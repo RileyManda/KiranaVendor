@@ -92,7 +92,7 @@ public class Profile extends Fragment {
     }
 
     public void updateUserInfo(FirebaseUser user) {
-        progressD.hideProgressDialog();
+        progressD.hideProgressBar();
         if (user != null) {
 
             //set First letter of Users name chopped
@@ -158,20 +158,20 @@ public class Profile extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        progressD.hideProgressDialog();
+        progressD.hideProgressBar();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        progressD.hideProgressDialog();//progress dialog from Base Activity
+        progressD.hideProgressBar();//progress dialog from Base Activity
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        progressD.hideProgressDialog();
+        progressD.hideProgressBar();
     }
 
 

@@ -1,40 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
     android:layout_marginTop="8dp"
     android:layout_marginBottom="8dp"
     android:paddingLeft="5dp"
     android:paddingRight="5dp"
-    tools:layout_constraintTop_creator="1"
-    tools:layout_constraintRight_creator="1"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
     tools:layout_constraintBottom_creator="1"
-    tools:layout_constraintLeft_creator="1">
-
+    tools:layout_constraintLeft_creator="1"
+    tools:layout_constraintRight_creator="1"
+    tools:layout_constraintTop_creator="1">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
+        android:isScrollContainer="true"
         android:orientation="vertical"
-        android:isScrollContainer="true">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp">
 
         <TextView
             android:id="@+id/prod_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:includeFontPadding="false"
-            tools:text="Endo descriptive text goes here"
-            android:textColor="@color/black"
-            android:fontFamily="sans-serif"
             android:layout_alignWithParentIfMissing="true"
-            />
+            android:fontFamily="sans-serif"
+            android:includeFontPadding="false"
+            android:textColor="@color/black"
+            tools:text="Endo descriptive text goes here" />
 
 
     </RelativeLayout>

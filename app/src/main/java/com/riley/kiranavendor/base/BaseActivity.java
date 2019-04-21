@@ -1,11 +1,11 @@
 package com.riley.kiranavendor.base;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +27,7 @@ public class BaseActivity extends AppCompatActivity {
     public static final String REQUIRED = "Required";
     public static final String TOO_LONG = "Acc Type Too long";
     public static final String NO_SUCH = "Incorrect Account Type";
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgress;
     private DatabaseReference titleRef;
     private ValueEventListener mTitleListener;
     public String mTitle;
@@ -54,23 +54,18 @@ public class BaseActivity extends AppCompatActivity {
 
 
 
-    public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setCancelable(false);
-            mProgressDialog.setMessage("Loading...........Please wait....");
-            mProgressDialog = new ProgressDialog(this);
-            // mProgressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-
-            // mProgressDialog.setIcon(R.mipmap.ic_launcher);
-        }
-        mProgressDialog.show();
+    public void showProgressBar() {
+        mProgress = findViewById(R.id.mprogress);
+        mProgress.setProgress(50);
+        mProgress.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
-        }
+
+
+    public void hideProgressBar() {
+
+        mProgress.setVisibility(View.GONE);
+
     }
 
     public void hideKeyboard() {
@@ -86,6 +81,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void checkNet() {
+       // showProgressBar();
         if (AppStatus.getInstance(getApplicationContext()).isOnline()) {
         } else {
             Snackbar.make(findViewById(R.id.verifView), "You seem to be Offline", Snackbar.LENGTH_INDEFINITE)
@@ -95,7 +91,7 @@ public class BaseActivity extends AppCompatActivity {
                         }
                     })
                     .show();
-            hideProgressDialog();
+hideProgressBar();
 
         }
     }
@@ -104,10 +100,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
         Snackbar.make(findViewById(R.id.main_content), "You seem to be Offline", Snackbar.LENGTH_INDEFINITE)
-                .setAction("Dismiss", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                    }
+                .setAction("Dismiss", v -> {
                 })
                 .show();
     }

@@ -1,33 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
-    <!--[START]AuthOptions[HELP]**************************************-->
+<?xml version="1.0" encoding="utf-8"?><!--[START]AuthOptions[HELP]**************************************-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/helpView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-            android:id="@+id/repissue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/reportissue"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_alignParentStart="true"
-            app:icon="@drawable/ic_bug_report_black_24dp"/>
 
-        <TextView
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:id="@+id/help"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/help"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_alignParentEnd="true"
-            android:drawableStart="@drawable/ic_live_help_black_24dp"/>
-    </RelativeLayout>
-    <!--[END]AuthOptions[HELP]**************************************-->
+
+    <TextView
+        android:id="@+id/repissue"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:drawableStart="@drawable/ic_bug_report_black_24dp"
+        android:text="@string/reportissue"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/help"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:drawableStart="@drawable/ic_live_help_black_24dp"
+        android:text="@string/help"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+</RelativeLayout><!--[END]AuthOptions[HELP]**************************************-->
 
 
 

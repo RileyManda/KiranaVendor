@@ -71,8 +71,6 @@ public class HomeActivity extends BaseActivity {
             @NonNull
             @Override
             public Fragment getItem(int position) {
-                // getItem is called to instantiate the fragment for the given page.
-                // Return a PlaceholderFragment (defined as a static inner class below).
                 return mFragments[position];
             }
             @Override
@@ -91,7 +89,7 @@ public class HomeActivity extends BaseActivity {
         home_tabLayout = findViewById(R.id.tabs);
         home_tabLayout.setupWithViewPager(mViewPager);
         setupTabIcons();
-        fab = findViewById(R.id.fab);
+        fab = findViewById(R.id.createFab);
         fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, CreateProduct.class)));
 
 
@@ -100,14 +98,8 @@ public class HomeActivity extends BaseActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0 ) {
                     homeHeader.setImageResource(R.drawable.ic_business_center_black_24dp);
-                    //   hanim_View.setVisibility(View.VISIBLE);
-                    //  hanim_View.setAnimation("connections-animation.json");
-                    //  hanim_View.setRepeatCount(2);
-                    //  hanim_View.playAnimation();
-                } else if (tab.getPosition() == 1) {
+                } else{
                     homeHeader.setImageResource(R.drawable.ic_shopping_cart_black_24dp);
-                } else {
-                    homeHeader.setImageResource(R.mipmap.ic_launcher);
                 }
             }
             @Override

@@ -52,7 +52,9 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
     }
 
-    /**Product Detail View[START]s**/
+    /**
+     * Product Detail View[START]s
+     **/
 //[TextViews]
 
 
@@ -84,14 +86,16 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
     @BindView(R.id.editProdbtn)
     public ImageButton meditProd;
-    /**Product Detail View[END]s**/
+    /**
+     * Product Detail View[END]s
+     **/
     private String prodKey;
     Calendar calendar;
     SimpleDateFormat simpledateformat;
     // PostTime newTime = new PostTime();
     String Date;
 
-    public String catsItemKey,mapsKey;
+    public String catsItemKey, mapsKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +132,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
         // simpledateformat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 
     }
-
 
 
     /********************************[PRODUCT Interface|CallBack]*****************************************************************/
@@ -173,8 +176,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
     }
 
 
-
-
     //********************************[Post Interface|CallBack END]*****************************************************************/
 
 
@@ -192,7 +193,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
 
     //********************************[Buttons END]**********************************************/
-
 
 
 //********************************[Methods]**************************************************************/
@@ -220,9 +220,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
 
     }
-
-
-
 
 
     /********************************[Delete Product]**************************************************************/
@@ -275,8 +272,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
     /********************************[Delete Product END]**************************************************************/
 
 
-
-
     /********************************[Edit Product]**************************************************************/
 
     private void editProduct() {
@@ -293,17 +288,15 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
         super.onStart();
         disablePostButtons();
         // [value_event_listener]
-        showProgressDialog();
+        showProgressBar();
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                hideProgressDialog();
+                hideProgressBar();
                 // Get Post object and use the values to update the UI
                 Product product = dataSnapshot.getValue(Product.class);
                 // Cat cat = dataSnapshot.getValue(Cat.class);
                 if (product != null) {
-
-
 
 
                     mProdName.setText(product.product_name);
@@ -314,9 +307,7 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
                     dateView.setText(product.date);
 
 
-
                     mPurchases.setText(String.valueOf(product.purchases));
-
 
 
                     //ownership test
@@ -330,7 +321,7 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
                 } else {
 
 
-                    hideProgressDialog();
+                    hideProgressBar();
 
 
                 }
@@ -389,7 +380,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
 
     }
-
 
 
     @NonNull

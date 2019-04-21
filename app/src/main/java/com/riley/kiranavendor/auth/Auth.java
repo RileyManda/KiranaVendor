@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
@@ -33,9 +32,8 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.riley.kiranavendor.HomeActivity;
-import com.riley.kiranavendor.base.BaseActivity;
-
 import com.riley.kiranavendor.R;
+import com.riley.kiranavendor.base.BaseActivity;
 import com.riley.kiranavendor.modal.User;
 
 import java.util.ArrayList;
@@ -112,28 +110,28 @@ public class Auth extends BaseActivity implements
 
     @BindView(R.id.buttonVerifyPhone)
     public
-    MaterialButton mVerifyButton;
+    Button mVerifyButton;
     @BindView(R.id.btnResend)
     public
-    MaterialButton mResendButton;
+    Button mResendButton;
 
     @BindView(R.id.signOutButton)
     public
-    MaterialButton mSignOutButton;
+    Button mSignOutButton;
 
     @BindView(R.id.repissue)
     public
-    MaterialButton mReports;
+    TextView mReports;
 
 
 
     @BindView(R.id.save_data)
     public
-    MaterialButton msaveData;
+    Button msaveData;
 
     @BindView(R.id.skip)
     public
-    MaterialButton mSkipDtForm;
+    Button mSkipDtForm;
     /**DATA FORM & AUTH  VIEWS [END]**/
 
 
@@ -153,7 +151,6 @@ public class Auth extends BaseActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
-
         FirebaseApp.initializeApp(this);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         unbinder = ButterKnife.bind(this);
@@ -282,23 +279,28 @@ public class Auth extends BaseActivity implements
     @Override
     public void onStart() {
         super.onStart();
+
         checkNet();
+
        // onFirstRun();
         // Check if user is signed in (non-null) and update UI accordingly.
 
     }
+
+
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putBoolean(KEY_VERIFY_IN_PROGRESS, mVerificationInProgress);
-        showProgressDialog();
+        showProgressBar();
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mVerificationInProgress = savedInstanceState.getBoolean(KEY_VERIFY_IN_PROGRESS);
-        showProgressDialog();
+        showProgressBar();
     }
 
 
@@ -395,7 +397,7 @@ public class Auth extends BaseActivity implements
             case STATE_INITIALIZED:
                 // Initialized state
                 enableViews(mSignUp, mPhoneNumberField);
-                disableViews(mVerifyButton, mResendButton, mVerificationField);
+                disableViews(mVerifyButton, mResendButton,mVerificationField);
                 mDetailText.setText(null);
                 break;
             case STATE_CODE_SENT:
@@ -403,21 +405,23 @@ public class Auth extends BaseActivity implements
                 enableViews(mVerifyButton, mResendButton, mPhoneNumberField, mVerificationField);
                 disableViews(mSignUp);
                 mDetailText.setText(R.string.status_code_sent);
+                hideProgressBar();
                 break;
             case STATE_VERIFY_FAILED:
-                hideProgressDialog();
+                hideProgressBar();
+                findViewById(R.id.mprogress).setVisibility(View.GONE);
                 // Verification has failed, show all options
                 enableViews(mSignUp, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
                 mDetailText.setText(R.string.status_verification_failed);
                 break;
             case STATE_VERIFY_SUCCESS:
-                hideProgressDialog();
+                hideProgressBar();
                 // Verification sign in
                 disableViews(mSignUp, mVerifyButton, mResendButton, mPhoneNumberField,
                         mVerificationField);
                 mDetailText.setText(R.string.status_verification_succeeded);
-               mDataFm.setVisibility(View.VISIBLE);
+                mDataFm.setVisibility(View.VISIBLE);
 
                 // Set the verification text based on the credential
                 if (cred != null) {
@@ -434,6 +438,7 @@ public class Auth extends BaseActivity implements
                 mDetailText.setText(R.string.status_sign_in_failed);
                 break;
             case STATE_SIGNIN_SUCCESS:
+
                 //show start profile activity
                 mSignedUpViews.setVisibility(View.GONE);
                 helpViews.setVisibility(View.GONE);
@@ -477,7 +482,7 @@ public class Auth extends BaseActivity implements
             return;
         }
 
-        showProgressDialog();
+
         if (user != null) {
             String userId = user.getUid();
 
@@ -512,6 +517,8 @@ public class Auth extends BaseActivity implements
             public void onComplete(@NonNull Task<Void> task) {
                 Intent h = new Intent(Auth.this,HomeActivity.class);
                 startActivity(h);
+                hideProgressBar();
+                findViewById(R.id.mprogress).setVisibility(View.GONE);
 
             }
 
@@ -539,12 +546,14 @@ public class Auth extends BaseActivity implements
     private void enableViews(View... views) {
         for (View v : views) {
             v.setEnabled(true);
+            v.setAlpha(1f);
         }
     }
 
     private void disableViews(View... views) {
         for (View v : views) {
             v.setEnabled(false);
+            v.setAlpha(0.5f);
         }
     }
     private boolean validateForm() {
@@ -601,6 +610,8 @@ public class Auth extends BaseActivity implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.verificationBtn:
+                showProgressBar();
+                findViewById(R.id.mprogress).setVisibility(View.VISIBLE);
                 hideKeyboard();
                 if (!validatePhoneNumber()) {
                     return;
@@ -609,6 +620,8 @@ public class Auth extends BaseActivity implements
                 startPhoneNumberVerification(mPhoneNumberField.getText().toString());
                 break;
             case R.id.buttonVerifyPhone:
+                showProgressBar();
+                findViewById(R.id.mprogress).setVisibility(View.VISIBLE);
                 String code = mVerificationField.getText().toString();
                 if (TextUtils.isEmpty(code)) {
                     mVerificationField.setError("Cannot be empty.");
@@ -618,13 +631,18 @@ public class Auth extends BaseActivity implements
                 verifyPhoneNumberWithCode(mVerificationId, code);
                 break;
             case R.id.btnResend:
+                showProgressBar();
+                findViewById(R.id.mprogress).setVisibility(View.VISIBLE);
                 resendVerificationCode(mPhoneNumberField.getText().toString(), mResendToken);
                 break;
 
             case R.id.save_data:
+                showProgressBar();
+                findViewById(R.id.mprogress).setVisibility(View.VISIBLE);
                 FirebaseUser user = mAuth.getCurrentUser();
               getUData(user);
               hideKeyboard();
+
 
                 break;
 

@@ -1,23 +1,20 @@
 package com.riley.kiranavendor.fragments;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
-import androidx.cursoradapter.widget.SimpleCursorAdapter;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,29 +34,26 @@ import butterknife.ButterKnife;
 /**
  * Displays List of All Products created by Vendor in Endo|
  * Fragment Activity:HomeActivity
- * Query:EndosFragQ
- * **/
+ * Query:ProductsQ
+ **/
 
 public abstract class ProductsFragment extends Fragment {
-
-
 
 
     private static final String TAG = "ProductsFragment";
     // [START define_database_reference]
     private DatabaseReference mDatabase;
-    private  DatabaseReference mPostReference,searchRef;
+    private DatabaseReference mPostReference;
     // [END define_database_reference]
-    private ProgressDialog mProgressDialog;
+    private ProgressBar mProgress;
     private FirebaseRecyclerAdapter<Product, ProductViewHolder> mAdapter;
-    public RecyclerView mRecycler;
+    private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    public  String catsKey;
+    public String catsKey;
     // public  String searchtext;
 
 
 
-    //public SwitchCompat mPrivacy;
     public ProductsFragment() {
     }
 
@@ -71,13 +65,12 @@ public abstract class ProductsFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mPostReference = FirebaseDatabase.getInstance().getReference();
         mPostReference.keepSynced(true);
-       ButterKnife.bind(this,rootView);
+        ButterKnife.bind(this, rootView);
         mRecycler = rootView.findViewById(R.id.productList);
         mRecycler.setHasFixedSize(true);
+        mProgress = rootView.findViewById(R.id.mprogress);
         return rootView;
     }
-
-
 
 
     @Override
@@ -88,16 +81,32 @@ public abstract class ProductsFragment extends Fragment {
         mManager.setReverseLayout(true);
         mManager.setStackFromEnd(true);
         mRecycler.setLayoutManager(mManager);
-        // Set up FirebaseRecyclerAdapter with the Query
-        showProgressDialog();
-        fetch();
-    }
-    private  void fetch(){
 
+        // Set up FirebaseRecyclerAdapter with the Query
+
+
+
+    }
+
+
+    /**
+     * FirebaseRecyclerOptions<Chat> options =
+     * new FirebaseRecyclerOptions.Builder<Chat>()
+     * .setIndexedQuery(
+     * mChatIndicesRef.limitToFirst(50), sChatQuery.getRef(), Chat.class)
+     * .setLifecycleOwner(this)
+     * .build();
+     * <p>
+     * return new FirebaseRecyclerAdapter<Chat, ChatHolder>(options) {
+     **/
+
+    private void fetch() {
+        showProgressBar();
         Query postsQuery = getQuery(mDatabase);
-        FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<Product>()
+        FirebaseRecyclerOptions<Product> options = new FirebaseRecyclerOptions.Builder<Product>()
                 .setQuery(postsQuery, Product.class)
                 .build();
+
         mAdapter = new FirebaseRecyclerAdapter<Product, ProductViewHolder>(options) {
             @NonNull
             @Override
@@ -109,7 +118,7 @@ public abstract class ProductsFragment extends Fragment {
             @Override
             public void onBindViewHolder(@NonNull ProductViewHolder viewHolder, int position, @NonNull final Product model) {
                 final DatabaseReference postRef = getRef(position);
-                hideProgressDialog();
+               hideProgressBar();
                 // Set click listener for the whole post view
                 final String prodKey = postRef.getKey();
                 // final String hide = postRef.getKey();
@@ -118,10 +127,8 @@ public abstract class ProductsFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), ProductDetail.class);
                     intent.putExtra(ProductDetail.EXTRA_PRODUCT_KEY, prodKey);
                     startActivity(intent);
-                    getUserView();
+
                 });
-
-
 
 
                 // Determine if the current user has liked this post and set UI accordingly
@@ -132,20 +139,7 @@ public abstract class ProductsFragment extends Fragment {
                     viewHolder.hCart.setImageResource(R.drawable.ic_purchased);
                 }
 
-
-                // Determine if the current user has liked this post and set UI accordingly
-                if (model.purchased.containsKey(getUid())) {
-                   // viewHolder.privView.setChecked(true);
-
-
-                } else {
-                   // viewHolder.privView.setChecked(false);
-                   // Toast.makeText(getActivity(), "Your Endo is Public", Toast.LENGTH_SHORT).show();
-
-                }
 /*****************************[Go To Category for each Chip = category position]*******************/
-
-
 
 
                 // Bind Product to ViewHolder, setting OnClickListener for the cart
@@ -168,60 +162,28 @@ public abstract class ProductsFragment extends Fragment {
     }
 
 
+    public void showProgressBar() {
 
-    private void getUserView() {
+        if(mProgress!=null){
 
-
-    }
-
-    public void showprivAlert(){
-
-        Toast.makeText(getActivity(), "Your Endo is Private", Toast.LENGTH_SHORT).show();
-
-        Snackbar.make(getActivity().findViewById(R.id.main_content), "Your Endo is Private & only visible in your Control Center", Snackbar.LENGTH_LONG)
-                .setAction("Dismiss", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v1) {
-
-                    }
-                })
-                .show();
-
-
-        // Toast.makeText(getContext(),"Your Endo is now Private",Toast.LENGTH_LONG).show();
-    }
-
-
-    public  void showpubAlert(){
-        Toast.makeText(getContext(), "Your Endo is now Public", Toast.LENGTH_SHORT).show();
-
-        Snackbar.make(getActivity().findViewById(R.id.main_content), "Your Endo is now Public", Snackbar.LENGTH_LONG)
-                .setAction("Dismiss", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v1) {
-
-                    }
-                })
-                .show();
-
-        // Toast.makeText(getContext(), "Your Endo is Public", Toast.LENGTH_SHORT).show();
-    }
-
-    public void showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(getContext());
-            mProgressDialog.setCancelable(true);
-            mProgressDialog.setMessage("Loading...");
-            // mProgressDialog = new ProgressDialog(getContext(), R.style.CustomDialog);
-            // mProgressDialog.setIcon(R.drawable.ic_edit_black_24dp);
+            mProgress.setVisibility(View.VISIBLE);
         }
-        mProgressDialog.show();
+
+
+
     }
 
-    public void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
-            mProgressDialog.dismiss();
+
+    public void hideProgressBar() {
+
+        if(mProgress!=null){
+
+            mProgress.setVisibility(View.GONE);
         }
+
+
+
+
     }
 
     // [START post_stars_transaction]
@@ -267,10 +229,11 @@ public abstract class ProductsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        //showProgressDialog();
+        ////get data
+        fetch();
         if (mAdapter != null) {
             mAdapter.startListening();
-        }else{
+        } else {
             noDataFound();
         }
     }
@@ -280,7 +243,7 @@ public abstract class ProductsFragment extends Fragment {
         super.onStop();
         if (mAdapter != null) {
             mAdapter.stopListening();
-            hideProgressDialog();
+
         }
     }
 
@@ -289,7 +252,7 @@ public abstract class ProductsFragment extends Fragment {
         super.onPause();
         if (mAdapter != null) {
             mAdapter.stopListening();
-            hideProgressDialog();
+            hideProgressBar();
         }
     }
 
@@ -298,13 +261,13 @@ public abstract class ProductsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //showProgressDialog();
-       if (mAdapter != null) {
-           mAdapter.startListening();
+        if (mAdapter != null) {
+            mAdapter.startListening();
 //
-        }else{
-           hideProgressDialog();
-         noDataFound();
-       }
+        } else {
+            hideProgressBar();
+            noDataFound();
+        }
     }
 
     private void noDataFound() {
@@ -320,9 +283,11 @@ public abstract class ProductsFragment extends Fragment {
         //showProgressDialog();
         if (mAdapter != null) {
             mAdapter.stopListening();
-            hideProgressDialog();
+            hideProgressBar();
         }
     }
+
+
 
     @NonNull
     public String getUid() {
@@ -330,7 +295,6 @@ public abstract class ProductsFragment extends Fragment {
     }
 
     public abstract Query getQuery(DatabaseReference databaseReference);
-
 
 
 }

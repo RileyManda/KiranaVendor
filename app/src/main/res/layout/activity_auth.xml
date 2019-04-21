@@ -1,30 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/verifView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_alignParentTop="true"
     android:orientation="vertical"
     android:weightSum="4"
-    android:layout_alignParentTop="true"
-    android:id="@+id/verifView"
     tools:context=".auth.Auth">
+
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="18dp"/>
+        android:layout_marginBottom="18dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/app_launcher_icon" />
 
 
     <LinearLayout
         android:id="@+id/infoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:layout_marginBottom="18dp">
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/status"
             style="@style/ThemeOverlay.MyTextDetail"
@@ -41,39 +43,39 @@
 
     </LinearLayout>
 
-    <include
-        layout="@layout/activity_dataform" />
-
-
+    <!--DataForm**************************************-->
+    <include layout="@layout/activity_dataform" />
 
     <!--[START]AuthView**************************************-->
     <RelativeLayout
-        style="@style/Widget.MaterialComponents.CardView"
         android:id="@+id/signUpView"
+        style="@style/Widget.MaterialComponents.CardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/grey_300"
-        android:gravity="center_vertical"
         android:elevation="12dp"
+        android:gravity="center_vertical"
         android:visibility="visible">
+
+
+        <ProgressBar
+
+            android:id="@+id/mprogress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
+
+
 
         <LinearLayout
             android:id="@+id/phoneAuthFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="18dp">
+            android:layout_marginBottom="18dp"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phonelay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                app:counterEnabled="false"
-                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fieldPhoneNumber"
@@ -84,16 +86,8 @@
                     android:hint="@string/phone"
                     android:inputType="phone"
                     android:maxLines="1"
-                    android:textColor="@color/black"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/codelay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp">
+                    android:textColor="@color/black">
+        </com.google.android.material.textfield.TextInputEditText>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fieldVerificationCode"
@@ -103,73 +97,61 @@
                     android:layout_marginBottom="5dp"
                     android:hint="@string/hint_verification_code"
                     android:inputType="text"
-                    android:textColor="@color/black"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:textColor="@color/black" >
+                </com.google.android.material.textfield.TextInputEditText>
 
         </LinearLayout>
-
 
 
         <LinearLayout
             android:id="@+id/authButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/phoneAuthFields">
+            android:layout_below="@+id/phoneAuthFields"
+            android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/verificationBtn"
-                style="@style/Widget.MaterialComponents.Button"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:textColor="@color/white"
-                android:textStyle="bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="@string/phone_signin"
-                />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/buttonVerifyPhone"
-                style="@style/Widget.MaterialComponents.Button"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:textColor="@color/white"
-                android:textStyle="bold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="@string/verify_phone_auth"
-                />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnResend"
-                style="@style/Widget.MaterialComponents.Button"
-                android:backgroundTint="@color/colorPrimaryDark"
                 android:textColor="@color/white"
-                android:textStyle="bold"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnResend"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
                 android:layout_weight="1"
+                android:backgroundTint="@color/colorPrimaryDark"
                 android:text="@string/resend_phone_auth"
-                />
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
 
     </RelativeLayout>
 
-    <!--[START]Non Functional decorations for now********************************-->
+    <include layout="@layout/auth_help_view">
 
-    <!--[START]AuthOptions[HELP]**************************************-->
-   <include
-       layout="@layout/auth_help_view">
+    </include>
 
-   </include>
-    <!--[END]AuthOptions[HELP]**************************************-->
 
     <!--[END]Non Functional decorations for now********************************-->
 
@@ -181,20 +163,18 @@
         android:orientation="horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:visibility="gone"
-        android:weightSum="1.0">
+        android:visibility="gone">
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/signOutButton"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
-            android:text="@string/sign_out"
+            android:textColor="@color/white"
             android:backgroundTint="@color/colorPrimaryDark"
-            />
+            android:text="@string/sign_out" />
 
     </LinearLayout>
+
 
 
 

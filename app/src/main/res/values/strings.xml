@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">KiranaVendor</string>
+    <string name="app_name">Kirana Vendor</string>
     <string name="title_activity_maps">Map</string>
 
 
@@ -138,5 +138,8 @@
     <string name="description">Product Description,Lorem ipsum is blah blah blha..brrrrrr</string>
     <string name="qtycount">0</string>
     <string name="stock">Stock</string>
+    <string name="accounttype">Account Type</string>
+    <string name="app_launcher_icon">app_launcher_icon</string>
+    <string name="home_header">Home Header</string>
 
 </resources>

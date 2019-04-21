@@ -1,7 +1,7 @@
-<RelativeLayout android:id="@+id/RelativeLayout01"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout01"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
@@ -10,17 +10,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            >
-
+            android:layout_marginStart="8dp">
 
 
             <TextView
@@ -28,13 +24,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
+                android:includeFontPadding="false"
+                android:maxLines="1"
                 android:scaleType="fitXY"
                 android:text="@string/product"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:includeFontPadding="false"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>

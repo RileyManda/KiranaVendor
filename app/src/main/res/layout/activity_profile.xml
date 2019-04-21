@@ -148,7 +148,7 @@
             android:layout_marginLeft="18dp">
 
             <TextView
-                android:id="@+id/phoneLabel"
+                android:id="@+id/phone_lbl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="1dp"
@@ -166,11 +166,55 @@
                 android:layout_height="wrap_content"
                 android:text="@string/uid"
                 android:gravity="center_horizontal"
-                android:layout_below="@+id/phoneLabel"
+                android:layout_below="@+id/phone_lbl"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="2dp"/>
 
         </RelativeLayout>
+
+
+
+
+        <RelativeLayout
+
+
+            android:id="@+id/typeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp">
+
+            <TextView
+                android:id="@+id/typelbl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginTop="6dp"
+                android:maxLines="1"
+                android:text="@string/phonenumber"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                />
+
+
+            <TextView
+                android:id="@+id/accType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/accounttype"
+                android:gravity="center_horizontal"
+                android:layout_below="@+id/typelbl"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="2dp"/>
+
+        </RelativeLayout>
+
+
+
+
+
+
 
 
         <View
