@@ -6,6 +6,13 @@ The client has access top his/her purchase history inside a shopping cart view w
 
 Authentication is done via mobile phone(OTP).For added security;The app signout the user after a specific period of inactivity and user has to signin again using the code provided to them on the first time they singed intop the app.
 
+#Test Data:(Phone Numbers):
+
+# Test Data 
+
+#Vendor:+16505553434 Verification Code:123456
+
+#Clients:+16505552287 Verification Code:123457
 
 
 # ScreenShots
