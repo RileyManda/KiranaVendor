@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -49,7 +50,7 @@ public abstract class ProductsFragment extends Fragment {
     private FirebaseRecyclerAdapter<Product, ProductViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
-    public String catsKey;
+    public String viewKey;
     // public  String searchtext;
 
 
@@ -130,8 +131,7 @@ public abstract class ProductsFragment extends Fragment {
 
                 });
 
-
-                // Determine if the current user has liked this post and set UI accordingly
+                    viewKey = prodKey;
                 if (model.purchased.containsKey(getUid())) {
                     viewHolder.hCart.setImageResource(R.drawable.ic_add_shopping_cart_black_24dp);
 
@@ -139,7 +139,13 @@ public abstract class ProductsFragment extends Fragment {
                     viewHolder.hCart.setImageResource(R.drawable.ic_purchased);
                 }
 
-/*****************************[Go To Category for each Chip = category position]*******************/
+
+                if (model.purchased.containsKey(getUid())) {
+
+
+                } else {
+
+                }
 
 
                 // Bind Product to ViewHolder, setting OnClickListener for the cart
@@ -159,6 +165,20 @@ public abstract class ProductsFragment extends Fragment {
         };
         mRecycler.setAdapter(mAdapter);
         //Collections.reverse();
+    }
+
+    private void addToWishList() {
+
+        //Toast.makeText(getContext(), "Added to WishList", Toast.LENGTH_LONG).show();
+    }
+
+    private void confirmPurchase() {
+
+        Intent intent = new Intent(getActivity(), ProductDetail.class);
+        intent.putExtra(ProductDetail.EXTRA_PRODUCT_KEY, viewKey);
+        startActivity(intent);
+
+
     }
 
 

@@ -9,7 +9,7 @@ import com.riley.kiranavendor.fragments.ProductsFragment;
 public class ProductsQ extends ProductsFragment {
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
-        Query productsQuery = databaseReference.child("products");
-        return productsQuery;
+        Query purchaseQuery = databaseReference.child("products");
+        return purchaseQuery;
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +17,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.riley.kiranavendor.HomeActivity;
 import com.riley.kiranavendor.R;
 import com.riley.kiranavendor.network.AppStatus;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import butterknife.Unbinder;
 
@@ -28,11 +32,15 @@ public class BaseActivity extends AppCompatActivity {
     public static final String TOO_LONG = "Acc Type Too long";
     public static final String NO_SUCH = "Incorrect Account Type";
     private ProgressBar mProgress;
-    private DatabaseReference titleRef;
-    private ValueEventListener mTitleListener;
-    public String mTitle;
-    private FirebaseAuth mAuth;
+
+
     public Unbinder unbinder;
+
+    public TextView DisplayDateTime;
+    public Calendar calendar;
+    public SimpleDateFormat simpledateformat;
+    public  String Date;
+
 
     //Views
 

@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,7 +51,7 @@ public class CreateProduct extends BaseActivity {
     private static final String TAG = "CreateProduct";
     private static final String REQUIRED = "Required";
     private static final String tTOO_LONG = "Title is too long";
-    private static final String cTOO_LONG = "Category is too long";
+    private static final String cTOO_LONG = "Too long";
     //Firebase
     private DatabaseReference mDatabase;
 
@@ -78,9 +79,37 @@ public class CreateProduct extends BaseActivity {
 
 
     /**
-     * CREATE ViewS[END]s
+     *Purchase Views
+     *
      **/
+    @BindView(R.id.productName)
+    public TextView mProdName;
 
+    @BindView(R.id.product_id)
+    public TextView mProdId;
+
+    @BindView(R.id.product_price)
+    public TextView mProdPrice;
+
+    @BindView(R.id.prod_description)
+    public TextView mProdDesc;
+
+    @BindView(R.id.date)
+    public TextView dateView;
+
+    @BindView(R.id.vendor_name)
+    public TextView mVendor;
+
+
+    @BindView(R.id.prod_sales_count)
+    public TextView mPurchases;
+
+    //ImageButtons
+    @BindView(R.id.checkout)
+    public TextView mCheckOut;
+
+    @BindView(R.id.cancel)
+    public TextView mCancel;
 
     //keys
     public String catid;
@@ -158,8 +187,6 @@ public class CreateProduct extends BaseActivity {
     private void submitProduct() {
 
         final String product_name = crProdName.getText().toString().toUpperCase().trim();
-        String gen_id = Math.random() + product_name.substring(2);
-        final String product_id = gen_id + crProdId.getText().toString().toUpperCase().trim();
         //checkCategory();
         final String description = crProdDesc.getText().toString().trim();//save title to Db as Uppercase
 
@@ -185,7 +212,7 @@ public class CreateProduct extends BaseActivity {
         if (TextUtils.isEmpty(description)) {
             crProdDesc.setError(REQUIRED);
             return;
-        } else if (crProdDesc.length() > 30) {
+        } else if (crProdDesc.length() > 100) {
 
             crProdDesc.setError(cTOO_LONG);
             return;
@@ -226,6 +253,7 @@ public class CreateProduct extends BaseActivity {
                         assert user != null;
                         char vCode = user.account_type.toString().charAt(0);
                         String vendor = vCode + (user.firstname + user.lastname);
+                        String product_id = product.product_id;
 
                         if (user == null) {
                             // User is null, error out
@@ -233,7 +261,7 @@ public class CreateProduct extends BaseActivity {
                             //does user iput existbin db
 
                         } else {
-                            writeNewPost(userId, vendor, user.account_type, product_id, product_name, description, product_price, product_qty, date);
+                            writeNewProduct(userId, vendor, user.account_type, product_id, product_name, description, product_price, product_qty, date);
                             // Finish this Activity, back to the stream
                             setEditingEnabled(true);
                             finish();
@@ -266,14 +294,9 @@ public class CreateProduct extends BaseActivity {
     }
 
 
-    // [START write_fan_out]
-    private void writeNewPost(String userId, String vendor, String account_type, String product_id, String product_name, String description, String product_price, String product_qty, String date) {
-        String key = mDatabase.child("posts").push().getKey();
-        final String pushKey = mDatabase.child("categories").push().getKey();
-        categoryKey = pushKey;
-        catid = pushKey;
-
-        // tid = emapKey;
+    private void writeNewProduct(String userId, String vendor, String account_type, String product_id, String product_name, String description, String product_price, String product_qty, String date) {
+        String key = mDatabase.child("products").push().getKey();
+        product_id = key;
 
 
         Product product = new Product(userId, vendor, account_type, product_id, product_name, description, product_price, product_qty, date);
@@ -290,6 +313,7 @@ public class CreateProduct extends BaseActivity {
 
         mDatabase.updateChildren(childUpdates);
     }
+
 
 
     @Override

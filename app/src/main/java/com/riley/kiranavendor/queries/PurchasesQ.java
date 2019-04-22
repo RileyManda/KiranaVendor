@@ -5,10 +5,11 @@ import com.google.firebase.database.Query;
 import com.riley.kiranavendor.fragments.ProductsFragment;
 
 public class PurchasesQ  extends ProductsFragment {
+    String p = getUid()+"true";
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
 
-        return databaseReference.child("vendor-products")
+        return databaseReference.child("my-cart")
                 .child(getUid());
     }
 }

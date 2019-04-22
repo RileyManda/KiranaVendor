@@ -77,12 +77,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
-            android:layout_marginLeft="3dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
             android:layout_toEndOf="@+id/at"
-            android:layout_toRightOf="@+id/at"
             android:fontFamily="sans-serif-condensed"
             android:gravity="start|bottom"
             android:maxLines="1"
@@ -96,98 +93,16 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
-        android:id="@+id/qtyView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_toEndOf="@+id/timeView"
-        android:layout_toRightOf="@+id/timeView">
-
-        <ImageView
-            android:id="@+id/qtylabel"
-            style="@style/Base.TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginLeft="3dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="2dp"
-            android:src="@drawable/ic_filter_list_black_24dp" />
-
-        <TextView
-            android:id="@+id/product_qty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_toEndOf="@+id/qtylabel"
-            android:layout_toRightOf="@+id/qtylabel"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="start|bottom"
-            android:maxLines="1"
-            android:text="@string/time"
-            android:textColor="@color/grey_500"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            tools:text="@string/time" />
 
 
-    </RelativeLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/priceView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_toEndOf="@+id/timeView"
-        android:layout_toRightOf="@+id/timeView">
-
-        <ImageView
-            android:id="@+id/prodIcon"
-            style="@style/Base.TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="2dp"
-            android:src="@drawable/ic_attach_money_black_24dp" />
-
-        <TextView
-            android:id="@+id/product_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="6dp"
-            android:layout_toEndOf="@+id/prodIcon"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="start|bottom"
-            android:maxLines="1"
-            android:text="@string/time"
-            android:textColor="@color/grey_500"
-            android:textSize="12sp"
-            android:textStyle="normal"
-            tools:text="@string/price" />
-
-
-    </RelativeLayout>
 
 
 
 
 
     <RelativeLayout
-        android:id="@+id/likesView"
+        android:id="@+id/salesView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

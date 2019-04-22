@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="6dp"
+    android:layout_marginStart="6dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:id="@+id/prodIcon"
+                style="@style/Base.TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:src="@drawable/ic_attach_money_black_24dp" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_toEndOf="@+id/prodIcon"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start|bottom"
+                android:maxLines="1"
+                android:text="@string/time"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="@string/price" />
+
+
+
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/buyFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|bottom"
+            android:text="@string/buy"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:backgroundTint="@color/createBg"
+            android:layout_centerInParent="true"/>
+
+
+
+
+
+
+        <ImageView
+            android:id="@+id/qtylabel"
+            style="@style/Base.TextAppearance.AppCompat.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginEnd="3dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:padding="2dp"
+            android:src="@drawable/ic_filter_list_black_24dp" />
+
+        <TextView
+            android:id="@+id/product_qty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="3dp"
+            android:layout_toEndOf="@+id/qtylabel"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="start|bottom"
+            android:maxLines="1"
+            android:text="@string/time"
+            android:textColor="@color/grey_500"
+            android:textSize="15sp"
+            android:textStyle="normal"
+            tools:text="@string/time" />
+
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>

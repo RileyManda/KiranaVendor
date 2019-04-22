@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/post_btm_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/btnla"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+
+
+        <RelativeLayout
+            android:id="@+id/priceView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="8dp">
+
+            <ImageView
+                android:id="@+id/prodIcon"
+                style="@style/Base.TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:padding="2dp"
+                android:src="@drawable/ic_attach_money_black_24dp" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="6dp"
+                android:layout_toEndOf="@+id/prodIcon"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="start|bottom"
+                android:maxLines="1"
+                android:text="@string/time"
+                android:textColor="@color/grey_500"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                tools:text="@string/price" />
+
+
+            <TextView
+                style="@style/TextAppearance.AppCompat.Small"
+                android:id="@+id/product_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/productid"
+                tools:context="@string/productid"
+                android:layout_marginStart="6dp"
+                android:layout_toEndOf="@+id/product_price"
+                android:textColor="@color/grey_500"
+                android:text="@string/randtext"/>
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>

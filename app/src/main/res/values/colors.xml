@@ -6,6 +6,8 @@
 
     <color name="colorBg">#DA9126</color>
 
+    <color name="createBg">#F44336</color>
+
 
     <color name="white">#fff</color>
     <color name="grey_300">#E0E0E0</color>

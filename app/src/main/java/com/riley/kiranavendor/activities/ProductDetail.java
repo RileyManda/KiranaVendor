@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,10 +29,13 @@ import com.riley.kiranavendor.R;
 import com.riley.kiranavendor.Splash;
 import com.riley.kiranavendor.base.BaseActivity;
 import com.riley.kiranavendor.modal.Product;
+import com.riley.kiranavendor.modal.User;
 import com.riley.kiranavendor.vendor.EditProduct;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +47,7 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
     public static final String EXTRA_PRODUCT_KEY = "prodKey";
     private static final String TEXT_EMPTY = "Please add content";
     private static final String CONT_REQUIRED = "Type something before saving";
-    private static final String EMPTY_EDITCOM = "Cannot be Empty";
+    private static final String EMPTY_EDIT = "Cannot be Empty";
     //Db Reference
     private DatabaseReference mDatabase;
     private DatabaseReference mProductReference;
@@ -77,7 +84,7 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
     public TextView mVendor;
 
     @Nullable
-    @BindView(R.id.purchase_count)
+    @BindView(R.id.prod_sales_count)
     public TextView mPurchases;
 
     //ImageButtons
@@ -86,6 +93,9 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
     @BindView(R.id.editProdbtn)
     public ImageButton meditProd;
+
+    @BindView(R.id.buyFab)
+    public Button mBuy;
     /**
      * Product Detail View[END]s
      **/
@@ -134,49 +144,6 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
     }
 
 
-    /********************************[PRODUCT Interface|CallBack]*****************************************************************/
-    //Post interface
-    public interface PostCallback {
-        void onCallback(String prod_value);
-    }
-
-    public interface IdCallBack {
-        void onCallback(String prodpost_id);
-    }
-
-    //getPost method
-
-    public void postsBody(PostCallback postCallback) {
-        ValueEventListener prodlistener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Product product = dataSnapshot.getValue(Product.class);
-                if (product != null) {
-
-                    //final String post_uid = (String) dataSnapshot.child("uid").getValue();
-                    final String post_value = (String) dataSnapshot.child("body").getValue();
-                    Log.d(TAG, "Post Body is" + post_value);
-                    postCallback.onCallback(post_value);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
-                // [START_EXCLUDE]
-
-            }
-        };
-        mProductReference.addValueEventListener(prodlistener);
-        // [END Merge]
-    }
-
-
-    //********************************[Post Interface|CallBack END]*****************************************************************/
 
 
     /********************************[Crud Buttons]**********************************************/
@@ -190,6 +157,14 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
     public void meditPost() {
         editProduct();
     }
+
+
+    @OnClick(R.id.buyFab)
+    public void mBuy() {
+        completeTransaction();
+    }
+
+
 
 
     //********************************[Buttons END]**********************************************/
@@ -348,6 +323,64 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 
     }
 
+    public   void  completeTransaction(){
+        String clientsId = getUid();
+        String product_qty = "1";
+        final String product_name = mProdName.getText().toString().toUpperCase().trim();
+
+        final String product_price = mProdPrice.getText().toString().trim();//save title to Db as Uppercase
+        final String description = mProdDesc.getText().toString().trim();//save title to Db as Uppercase
+        final String vendor = mVendor.getText().toString().trim();//save title to Db as Uppercase
+        final String date = dateView.getText().toString().trim();
+        final String product_id = mProdId.getText().toString().trim();
+
+
+        // [START single_value_read]
+        final String userId = getUid();
+        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        // Get user value
+                        User user = dataSnapshot.getValue(User.class);
+                        Product product = dataSnapshot.getValue(Product.class);
+                        assert user != null;
+                        char vCode = user.account_type.toString().charAt(0);
+                        String vendor = vCode + (user.firstname + user.lastname);
+
+                        if (user == null) {
+                            Log.e(TAG, "User " + userId + " is unexpectedly null");
+                        } else {
+                            writePurchase(clientsId, vendor, user.account_type, product_id, product_name, description, product_price, product_qty, date);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                    }
+                });
+    }
+    private void writePurchase(String userId, String vendor, String account_type, String product_id, String product_name, String description, String product_price, String product_qty, String date) {
+
+        Product product = new Product(userId, vendor, account_type, product_id, product_name, description, product_price, product_qty, date);
+        Map<String, Object> productValues = product.toMap();
+
+        //child updates
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/my-cart/" + userId + "/" + product_id, productValues);
+
+        mDatabase.updateChildren(childUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Snackbar.make(findViewById(R.id.dscrollview), "Purchase of "+ product_name + "Complete", Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Dismiss", v -> {
+                        })
+                        .show();
+            }
+        });
+    }
 
     @Override
     public void onStop() {

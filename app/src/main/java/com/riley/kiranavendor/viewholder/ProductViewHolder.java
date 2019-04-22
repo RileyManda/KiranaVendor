@@ -61,24 +61,22 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindToProducts(Product product, View.OnClickListener mapClickListener) {
-
+    public void bindToProducts(Product product, View.OnClickListener cartClickListener) {
+        //Recycler View Binding
         pName.setText(product.product_name);
         prodId.setText(product.product_id);
-        pVendor.setText(product.vendor);
-        // vAccount.setText(product.account_type);
+        pQty.setText(product.product_qty);
         pDescription.setText(product.description);
         // pTime.setText(product.date);
         pPrice.setText(product.product_price);
 
         //Purchases
         mPurchases.setText(String.valueOf(product.purchases));
-//        mPurchases.setText(product.purchases);
-        hCart.setOnClickListener(mapClickListener);
+        hCart.setOnClickListener(cartClickListener);
 
 
     }
 
-    //Truncate Title
+
 
 }

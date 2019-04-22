@@ -29,11 +29,15 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.riley.kiranavendor.HomeActivity;
 import com.riley.kiranavendor.R;
 import com.riley.kiranavendor.base.BaseActivity;
+import com.riley.kiranavendor.modal.Product;
 import com.riley.kiranavendor.modal.User;
 
 import java.util.ArrayList;
@@ -391,6 +395,7 @@ public class Auth extends BaseActivity implements
 
     private void updateUI(int uiState, FirebaseUser user, PhoneAuthCredential cred) {
 
+
         switch (uiState) {
 
 
@@ -398,6 +403,7 @@ public class Auth extends BaseActivity implements
                 // Initialized state
                 enableViews(mSignUp, mPhoneNumberField);
                 disableViews(mVerifyButton, mResendButton,mVerificationField);
+
                 mDetailText.setText(null);
                 break;
             case STATE_CODE_SENT:

@@ -3,6 +3,7 @@
     <string name="title_activity_maps">Map</string>
 
 
+    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
 
 
 
@@ -141,5 +142,11 @@
     <string name="accounttype">Account Type</string>
     <string name="app_launcher_icon">app_launcher_icon</string>
     <string name="home_header">Home Header</string>
+    <string name="randtext">f4sd56#sfv</string>
+    <string name="conform_purchase">Conform Purchase</string>
+    <string name="confirm_purchase">CONFIRM PURCHASE</string>
+    <string name="cancel">Cancel</string>
+    <string name="checout">CheckOut</string>
+    <string name="buy">Buy</string>
 
 </resources>
