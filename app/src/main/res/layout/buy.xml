@@ -18,7 +18,7 @@
                 style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
+                android:layout_marginStart="6dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
@@ -60,38 +60,43 @@
 
 
 
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toEndOf="@+id/buyFab"
+    android:layout_marginStart="12dp">
 
 
-        <ImageView
-            android:id="@+id/qtylabel"
-            style="@style/Base.TextAppearance.AppCompat.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginEnd="3dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:padding="2dp"
-            android:src="@drawable/ic_filter_list_black_24dp" />
+    <ImageView
+        android:id="@+id/qtylabel"
+        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/product_qty"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="3dp"
-            android:layout_toEndOf="@+id/qtylabel"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="start|bottom"
-            android:maxLines="1"
-            android:text="@string/time"
-            android:textColor="@color/grey_500"
-            android:textSize="15sp"
-            android:textStyle="normal"
-            tools:text="@string/time" />
+        android:layout_marginStart="3dp"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:padding="2dp"
+        android:src="@drawable/ic_filter_list_black_24dp" />
+
+    <TextView
+        android:id="@+id/product_qty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:layout_toEndOf="@+id/qtylabel"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="start|bottom"
+        android:maxLines="1"
+        android:text="@string/time"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="normal"
+        tools:text="@string/time" />
+
+</RelativeLayout>
 
     </RelativeLayout>
 

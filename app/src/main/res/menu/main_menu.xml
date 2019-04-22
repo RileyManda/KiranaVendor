@@ -2,12 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/signout"
+        android:id="@+id/profile"
         android:orderInCategory="100"
-        android:title="@string/signout"
-        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        android:title="@string/notifs"
+        android:icon="@drawable/ic_person_black_24dp"
         app:showAsAction="always" />
+
+
 
     <item
         android:id="@+id/notifications"
@@ -15,5 +18,12 @@
         android:title="@string/notifs"
         android:icon="@drawable/ic_add_alert_black_24dp"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/signout"
+        android:orderInCategory="100"
+        android:title="@string/signout"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        app:showAsAction="ifRoom" />
 
 </menu>

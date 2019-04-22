@@ -54,10 +54,15 @@
         <activity
             android:name=".activities.ProductDetail"
             android:parentActivityName=".HomeActivity" />
+
         <activity
             android:name=".vendor.EditProduct"
             android:parentActivityName=".HomeActivity" />
         <activity android:name=".auth.Auth" />
+
+        <activity android:name=".ProfileActivity"
+            android:label="@string/home"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="com.google.android.gms.version"

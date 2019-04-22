@@ -5,11 +5,15 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +33,58 @@ public class Profile extends Fragment {
 
     public Profile() {
     }
+
+
+    /**DATA FORM & AUTH  VIEWS [START]**/
+
+    @BindView(R.id.dataForm)
+    public ViewGroup mDataFm;
+
+
+
+
+    @BindView(R.id.tvstatus)
+    public TextView mStatusText;
+
+    @BindView(R.id.detail)
+    public TextView mDetailText;
+
+    @BindView(R.id.ufname)
+    public TextView mFirstname;
+    @Nullable
+    @BindView(R.id.ulname)
+    public TextView mLastName;
+
+    @BindView(R.id.uage)
+    public TextView mAge;
+
+    @BindView(R.id.accType)
+    public AutoCompleteTextView mType;
+    //user data[Form Views]END
+
+    //EditTexts
+    @BindView(R.id.fieldPhoneNumber)
+    public TextInputEditText mPhoneNumberField;
+
+    @BindView(R.id.fieldVerificationCode)
+    public
+    TextInputEditText mVerificationField;
+
+
+
+
+
+
+
+
+    @BindView(R.id.save_data)
+    public
+    Button msaveData;
+
+    @BindView(R.id.skip)
+    public
+    Button mSkipDtForm;
+    /**DATA FORM & AUTH  VIEWS [END]**/
 
     private static final String TAG = "Profile";
 
@@ -68,6 +124,7 @@ public class Profile extends Fragment {
         View rootView = inflater.inflate(R.layout.activity_profile, container, false);
         // [START create_database_reference]
         ButterKnife.bind(this,rootView);
+
 
         // [START initialize_auth]
         // Initialize Firebase Auth

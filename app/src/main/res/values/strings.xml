@@ -148,5 +148,7 @@
     <string name="cancel">Cancel</string>
     <string name="checout">CheckOut</string>
     <string name="buy">Buy</string>
+    <string name="profile">Profile</string>
+    <string name="dataform">Data</string>
 
 </resources>

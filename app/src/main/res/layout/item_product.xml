@@ -106,7 +106,7 @@
                     android:id="@+id/prodImage"
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:background="@drawable/ic_add_shopping_cart_black_24dp"
+                    android:background="@drawable/vectoripad"
                     android:scaleType="centerCrop" />
 
 

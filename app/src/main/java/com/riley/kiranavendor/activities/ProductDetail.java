@@ -278,7 +278,7 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
                     mProdId.setText(product.product_id);
                     mProdPrice.setText(product.product_price);
                     mProdDesc.setText(product.description);
-                    mVendor.setText(product.description);
+                    mVendor.setText(product.vendor);
                     dateView.setText(product.date);
 
 

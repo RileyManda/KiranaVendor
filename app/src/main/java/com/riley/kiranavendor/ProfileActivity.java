@@ -1,6 +1,5 @@
 package com.riley.kiranavendor;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,34 +19,30 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.riley.kiranavendor.base.BaseActivity;
 import com.riley.kiranavendor.clients.Profile;
-import com.riley.kiranavendor.queries.ProductsQ;
-import com.riley.kiranavendor.queries.PurchasesQ;
-import com.riley.kiranavendor.vendor.CreateProduct;
 
 import butterknife.ButterKnife;
 
 
-public class HomeActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity {
 
-    private static final String TAG = "HomeActivity";
+    private static final String TAG = "ProfileActivity";
     private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
-    private TabLayout home_tabLayout;
+    private TabLayout profile_layout;
     private static FirebaseAuth mAuth;
     public FloatingActionButton fab;
     private AppBarLayout mAppbar;
 
 
     final int[] tabIcons = new int[]{
-            R.drawable.ic_business_center_black_24dp,
-            R.drawable.ic_shopping_cart_black_24dp,
+            R.drawable.ic_person_black_24dp,
 
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.profile_layouts);
         ButterKnife.bind(this);
         FirebaseApp.initializeApp(this);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -59,12 +54,13 @@ public class HomeActivity extends BaseActivity {
         mPagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             private final Fragment[] mFragments = new Fragment[]{
-                    new ProductsQ(),
-                    new PurchasesQ()
+                    new Profile()
+
             };
             private final String[] mFragmentNames = new String[]{
-                    getString(R.string.products),
-                    getString(R.string.purchases)
+                    getString(R.string.profile)
+
+
 
             };
 
@@ -87,20 +83,16 @@ public class HomeActivity extends BaseActivity {
         };
         mViewPager = findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
-        home_tabLayout = findViewById(R.id.tabs);
-        home_tabLayout.setupWithViewPager(mViewPager);
+        profile_layout = findViewById(R.id.tabs);
+        profile_layout.setupWithViewPager(mViewPager);
         setupTabIcons();
-        fab = findViewById(R.id.createFab);
-        fab.setOnClickListener(view -> startActivity(new Intent(HomeActivity.this, CreateProduct.class)));
 
 
-        home_tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        profile_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 0) {
-                    homeHeader.setImageResource(R.drawable.ic_business_center_black_24dp);
-                } else {
-                    homeHeader.setImageResource(R.drawable.ic_shopping_cart_black_24dp);
+                    homeHeader.setImageResource(R.drawable.ic_person_black_24dp);
                 }
             }
 
@@ -128,8 +120,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void setupTabIcons() {
-        home_tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        home_tabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        profile_layout.getTabAt(0).setIcon(tabIcons[0]);
+
 
 
     }
@@ -158,19 +150,10 @@ public class HomeActivity extends BaseActivity {
             return true;
         }
 
-
-        if (id == R.id.profile) {
-           // openProfile();
-            return true;
-        }
         return true;
     }
 
-    private void openProfile() {
 
-        Intent pr = new Intent(HomeActivity.this, ProfileActivity.class);
-        startActivity(pr);
-    }
 
     public void signOut() {
         mAuth.signOut();
