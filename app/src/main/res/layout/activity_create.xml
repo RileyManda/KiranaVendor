@@ -26,7 +26,8 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="5dp"
             android:scrollbars="horizontal"
-            tools:text="@string/productid">
+            tools:text="@string/productid"
+            android:clickable="false">
 
         </com.google.android.material.textfield.TextInputEditText>
 

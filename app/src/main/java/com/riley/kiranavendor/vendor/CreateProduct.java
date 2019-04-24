@@ -82,34 +82,8 @@ public class CreateProduct extends BaseActivity {
      *Purchase Views
      *
      **/
-    @BindView(R.id.productName)
-    public TextView mProdName;
-
-    @BindView(R.id.product_id)
-    public TextView mProdId;
-
-    @BindView(R.id.product_price)
-    public TextView mProdPrice;
-
-    @BindView(R.id.prod_description)
-    public TextView mProdDesc;
-
-    @BindView(R.id.date)
-    public TextView dateView;
-
-    @BindView(R.id.vendor_name)
-    public TextView mVendor;
 
 
-    @BindView(R.id.prod_sales_count)
-    public TextView mPurchases;
-
-    //ImageButtons
-    @BindView(R.id.checkout)
-    public TextView mCheckOut;
-
-    @BindView(R.id.cancel)
-    public TextView mCancel;
 
     //keys
     public String catid;

@@ -1,12 +1,15 @@
 package com.riley.kiranavendor;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -18,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.riley.kiranavendor.auth.Auth;
 import com.riley.kiranavendor.base.BaseActivity;
 import com.riley.kiranavendor.clients.Profile;
 import com.riley.kiranavendor.queries.ProductsQ;
@@ -173,7 +177,43 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void signOut() {
-        mAuth.signOut();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(HomeActivity.this);
+            builder.setTitle("Singing Out");
+            builder.setIcon(R.drawable.ic_add_alert_black_24dp);
+            builder.setMessage("You are about to sign out,Please confirm...");
+            builder.setCancelable(false);
+
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    confirmedSignout();
+                    Toast.makeText(HomeActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+                }
+            });
+
+            builder.show();
+
+    }
+
+    private void confirmedSignout() {
+
+
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, Auth.class));
+            finish();
+
+
+
     }
 
 

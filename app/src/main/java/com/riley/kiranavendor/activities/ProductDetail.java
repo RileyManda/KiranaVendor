@@ -65,6 +65,9 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
 //[TextViews]
 
 
+    @BindView(R.id.product_qty)
+    public TextView mProdQty;
+
     @BindView(R.id.productName)
     public TextView mProdName;
 
@@ -280,6 +283,7 @@ public class ProductDetail extends BaseActivity implements View.OnClickListener 
                     mProdDesc.setText(product.description);
                     mVendor.setText(product.vendor);
                     dateView.setText(product.date);
+                    mProdQty.setText(product.product_qty);
 
 
                     mPurchases.setText(String.valueOf(product.purchases));
