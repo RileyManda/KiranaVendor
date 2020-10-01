@@ -1,4 +1,4 @@
-# Kirana Vendor App
+# Kirana Vendor App Prototype
 
 A vendor app that enables vendors selling products to create,edit,delete products,view transaction history and auto generate invoices for each purchase made by the client.
 
